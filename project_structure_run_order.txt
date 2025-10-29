@@ -1,0 +1,44 @@
+Project Structure
+-----------------
+- backend/
+  - index.js           : Express 서버 엔트리포인트, /api 라우트 정의.
+  - database.js        : Sequelize 초기화 및 User/Post 모델 정의.
+  - database.sqlite    : SQLite 데이터베이스 파일.
+  - package.json       : 백엔드 의존성과 npm 스크립트 (start 등).
+- frontend/
+  - public/            : CRA 기본 정적 자원, index.html 포함.
+  - src/
+    - index.js         : React 앱 진입점, App 컴포넌트 렌더링.
+    - App.js           : 라우팅 및 전역 레이아웃 구성.
+    - components/
+      - Navbar.js      : 상단 네비게이션 바.
+      - PostList.js    : 게시글 목록 화면.
+      - PostDetail.js  : 게시글 상세 화면.
+      - CreatePost.js  : 질문(게시글) 등록 폼.
+      - Login.js       : 로그인 폼.
+      - Register.js    : 회원가입 폼.
+- run_instructions.txt : IDE용 실행 가이드 (npm start 등).
+
+
+Run Order
+---------
+1. Backend
+   ```bash
+   cd backend
+   npm install
+   npm start
+   ```
+   - 서버가 `http://localhost:3001`에서 실행되며 `/api` 엔드포인트 제공.
+
+2. Frontend
+   ```bash
+   cd frontend
+   npm install
+   npm start
+   ```
+   - React 개발 서버가 `http://localhost:3000`에서 실행, 백엔드 API와 통신.
+
+3. 종료
+   - 각각의 터미널에서 `Ctrl+C`로 종료.
+   - 필요하면 백엔드 서버부터 종료하여 DB 연결을 먼저 정리.
+
