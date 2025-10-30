@@ -19,58 +19,85 @@ function PostList() { // 게시글 목록을 보여주는 컴포넌트입니다.
   }, []);
 
   return (
-    <div style={{ padding: '1rem' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
-        <input type="text" placeholder="검색어를 입력하세요" style={{ padding: '0.5rem' }} />
-        <button style={{ padding: '0.5rem 1rem' }}>검색</button>
+    <div className="glass-container fade-in-up">
+      <h1 style={{ 
+        textAlign: 'center', 
+        marginBottom: '2rem', 
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        fontSize: '2.5rem',
+        fontWeight: '800'
+      }}>
+        📝 게시판
+      </h1>
+      
+      <div className="search-container">
+        <input 
+          type="text" 
+          placeholder="🔍 검색어를 입력하세요..." 
+          className="search-input"
+        />
+        <button className="btn btn-success">✨ 검색</button>
       </div>
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-        <thead style={{ backgroundColor: 'black', color: 'white' }}>
-          <tr>
-            <th style={{ padding: '0.5rem' }}>번호</th>
-            <th style={{ padding: '0.5rem' }}>제목</th>
-            <th style={{ padding: '0.5rem' }}>작성자</th>
-            <th style={{ padding: '0.5rem' }}>작성일</th>
-          </tr>
-        </thead>
-        <tbody>
-          {posts.map((post, index) => (
-            <tr key={post.id} style={{ backgroundColor: index % 2 === 0 ? '#f2f2f2' : 'white' }}>
-              <td style={{ padding: '0.5rem', textAlign: 'center' }}>{posts.length - index}</td>
-              <td style={{ padding: '0.5rem' }}>
-                <Link to={`/post/${post.id}`}>
-                  {post.title} [{post.comment_count ?? 0}]
-                </Link>
-              </td>
-              <td style={{ padding: '0.5rem', textAlign: 'center' }}>{post.author?.username ?? '-'}</td>
-              <td style={{ padding: '0.5rem', textAlign: 'center' }}>
-                {new Date(post.createdAt).toLocaleDateString('ko-KR', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                  hour: 'numeric',
-                  minute: 'numeric',
-                })}
-              </td>
+      
+      <div className="table-container">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>📊 번호</th>
+              <th>📋 제목</th>
+              <th>👤 작성자</th>
+              <th>📅 작성일</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
-        <button style={{ padding: '0.5rem 1rem' }}>이전</button>
+          </thead>
+          <tbody>
+            {posts.map((post, index) => (
+              <tr key={post.id} className="fade-in-left" style={{ animationDelay: `${index * 0.1}s` }}>
+                <td style={{ textAlign: 'center', fontWeight: '600' }}>
+                  {posts.length - index}
+                </td>
+                <td>
+                  <Link to={`/post/${post.id}`} style={{ fontWeight: '500' }}>
+                    {post.title} 
+                    <span style={{ 
+                      color: '#f093fb', 
+                      fontWeight: '600',
+                      marginLeft: '8px'
+                    }}>
+                      [{post.comment_count ?? 0}]
+                    </span>
+                  </Link>
+                </td>
+                <td style={{ textAlign: 'center', fontWeight: '500' }}>
+                  {post.author?.username ?? '익명'}
+                </td>
+                <td style={{ textAlign: 'center', fontSize: '0.9rem', color: '#718096' }}>
+                  {new Date(post.createdAt).toLocaleDateString('ko-KR', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      
+      <div className="pagination">
+        <button className="btn btn-primary">⬅️</button>
         {[1, 2, 3, 4, 5, 6].map((page) => (
           <button
             key={page}
-            style={{
-              padding: '0.5rem 1rem',
-              backgroundColor: page === 1 ? 'blue' : 'transparent',
-              color: page === 1 ? 'white' : 'black',
-            }}
+            className={`btn ${page === 1 ? 'btn-primary active' : 'btn-secondary'}`}
           >
             {page}
           </button>
         ))}
-        <button style={{ padding: '0.5rem 1rem' }}>다음</button>
+        <button className="btn btn-primary">➡️</button>
       </div>
     </div>
   );

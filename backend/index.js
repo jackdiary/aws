@@ -42,6 +42,27 @@ const authenticate = (req, res, next) => { // 인증을 처리하는 미들웨�
   }
 };
 
+app.get('/', (req, res) => {
+  res.send('Backend is running');
+});
+
+// Health check endpoint for load balancer
+app.get('/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'healthy', 
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
+
+api.get('/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'healthy', 
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
+
 api.post('/register', async (req, res) => { // '/api/register' 경로에 대한 POST 요청을 처리합니다. (회원가입)
   try { // 비동기 작업 중 발생할 수 있는 오류를 처리합니다.
     const { username, email, password } = req.body; // 요청 본문에서 username, email, password를 추출합니다.

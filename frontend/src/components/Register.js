@@ -18,23 +18,56 @@ function Register() { // Register 함수형 컴포넌트를 정의합니다.
     }
   };
 
-  return ( // JSX를 반환하여 UI를 렌더링합니다.
-    <div style={{ padding: '1rem' }}> {/* 전체를 감싸는 div에 패딩 스타일을 적용합니다. */}
-      <h2>회원가입</h2> {/* 페이지 제목을 h2 태그로 표시합니다. */}
-      <form onSubmit={handleSubmit}> {/* 폼 제출 시 handleSubmit 함수가 호출되도록 설정합니다. */}
-        <div style={{ marginBottom: '1rem' }}> {/* 사용자 이름 입력 부분을 감싸는 div 입니다. */}
-          <label>사용자 이름</label> {/* '사용자 이름' 라벨입니다. */}
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required style={{ width: '100%', padding: '0.5rem' }} /> {/* 사용자 이름 입력 필드입니다. */}
+  return (
+    <div className="glass-container fade-in-up" style={{ maxWidth: '400px', margin: '2rem auto' }}>
+      <h2 style={{ 
+        textAlign: 'center', 
+        marginBottom: '2rem', 
+        background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        fontSize: '2rem',
+        fontWeight: '800'
+      }}>
+        🚀 회원가입
+      </h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label className="form-label">👤 사용자 이름</label>
+          <input 
+            type="text" 
+            value={username} 
+            onChange={(e) => setUsername(e.target.value)} 
+            required 
+            className="form-input"
+            placeholder="멋진 사용자 이름을 입력하세요"
+          />
         </div>
-        <div style={{ marginBottom: '1rem' }}> {/* 이메일 입력 부분을 감싸는 div 입니다. */}
-          <label>이메일</label> {/* '이메일' 라벨입니다. */}
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required style={{ width: '100%', padding: '0.5rem' }} /> {/* 이메일 입력 필드입니다. */}
+        <div className="form-group">
+          <label className="form-label">📧 이메일</label>
+          <input 
+            type="email" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} 
+            required 
+            className="form-input"
+            placeholder="이메일 주소를 입력하세요"
+          />
         </div>
-        <div style={{ marginBottom: '1rem' }}> {/* 비밀번호 입력 부분을 감싸는 div 입니다. */}
-          <label>비밀번호</label> {/* '비밀번호' 라벨입니다. */}
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required style={{ width: '100%', padding: '0.5rem' }} /> {/* 비밀번호 입력 필드입니다. */}
+        <div className="form-group">
+          <label className="form-label">🔒 비밀번호</label>
+          <input 
+            type="password" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            required 
+            className="form-input"
+            placeholder="안전한 비밀번호를 입력하세요"
+          />
         </div>
-        <button type="submit" style={{ padding: '0.5rem 1rem' }}>회원가입</button> {/* 폼을 제출하는 '회원가입' 버튼입니다. */}
+        <button type="submit" className="btn btn-secondary" style={{ width: '100%', marginTop: '1rem' }}>
+          🎉 가입하기
+        </button>
       </form>
     </div>
   );

@@ -65,61 +65,185 @@ function PostDetail() { // PostDetail 함수형 컴포넌트를 정의합니다.
     }
   };
 
-  if (!post) { // post 상태가 null(아직 데이터를 불러오지 못함)이면 실행됩니다.
-    return <div>게시글을 불러오는 중...</div>; // "게시글을 불러오는 중..." 메시지를 표시합니다.
+  if (!post) {
+    return (
+      <div className="glass-container fade-in-up" style={{ 
+        maxWidth: '400px', 
+        margin: '4rem auto',
+        textAlign: 'center',
+        padding: '3rem'
+      }}>
+        <div className="loading-spinner"></div>
+        <h3 style={{ 
+          marginTop: '2rem',
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          fontSize: '1.5rem',
+          fontWeight: '600'
+        }}>
+          ✨ 게시글을 불러오는 중...
+        </h3>
+        <p style={{ color: '#718096', marginTop: '1rem' }}>
+          잠시만 기다려주세요!
+        </p>
+      </div>
+    );
   }
 
-  return ( // post 데이터가 있으면 게시글 상세 내용을 렌더링합니다.
-    <div style={{ padding: '1rem' }}> {/* 전체를 감싸는 div 요소에 패딩 스타일을 적용합니다. */}
-      <h2>{post.title}</h2> {/* 게시글 제목을 h2 태그로 표시합니다. */}
-      <p style={{ color: '#666', fontSize: '0.9rem' }}> {/* 문단(p) 태그에 스타일을 적용합니다. */}
-        작성일: {new Date(post.createdAt).toLocaleDateString()} {/* 게시글 작성일을 Date 객체로 변환하여 지역화된 날짜 문자열로 표시합니다. */}
-      </p>
-      <div style={{ marginTop: '2rem', lineHeight: '1.6' }}>{post.content}</div> {/* 게시글 내용을 div 태그로 표시하고 위쪽 여백과 줄 간격 스타일을 적용합니다. */}
+  return (
+    <div className="glass-container fade-in-up" style={{ maxWidth: '900px', margin: '2rem auto' }}>
+      {/* 게시글 헤더 */}
+      <div className="card" style={{ marginBottom: '2rem' }}>
+        <h1 style={{ 
+          fontSize: '2rem',
+          fontWeight: '700',
+          marginBottom: '1rem',
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent'
+        }}>
+          📋 {post.title}
+        </h1>
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: '1rem',
+          color: '#718096',
+          fontSize: '0.9rem',
+          marginBottom: '1.5rem'
+        }}>
+          <span>👤 {post.author?.username ?? '익명'}</span>
+          <span>📅 {new Date(post.createdAt).toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          })}</span>
+          <span>💬 답변 {post.comment_count ?? answers.length}개</span>
+        </div>
+        <div style={{ 
+          lineHeight: '1.8', 
+          fontSize: '1.1rem',
+          whiteSpace: 'pre-wrap',
+          background: 'rgba(255, 255, 255, 0.5)',
+          padding: '1.5rem',
+          borderRadius: '12px',
+          border: '1px solid rgba(255, 255, 255, 0.3)'
+        }}>
+          {post.content}
+        </div>
+      </div>
 
-      <section style={{ marginTop: '3rem' }}>
-        <h3 style={{ marginBottom: '1rem' }}>답변 {post.comment_count ?? answers.length}개</h3>
+      {/* 답변 목록 */}
+      <section className="card" style={{ marginBottom: '2rem' }}>
+        <h3 style={{ 
+          fontSize: '1.5rem',
+          fontWeight: '700',
+          marginBottom: '1.5rem',
+          background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent'
+        }}>
+          💬 답변 {post.comment_count ?? answers.length}개
+        </h3>
         <div>
           {answers.length === 0 ? (
-            <p style={{ color: '#666' }}>아직 등록된 답변이 없습니다.</p>
+            <div style={{ 
+              textAlign: 'center', 
+              padding: '3rem',
+              color: '#718096',
+              fontSize: '1.1rem'
+            }}>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🤔</div>
+              <p>아직 등록된 답변이 없습니다.</p>
+              <p>첫 번째 답변을 작성해보세요!</p>
+            </div>
           ) : (
-            answers.map((answer) => (
-              <div key={answer.id} style={{ padding: '1rem', border: '1px solid #ddd', borderRadius: '6px', marginBottom: '1rem' }}>
-                <div style={{ fontSize: '0.9rem', color: '#555', marginBottom: '0.5rem' }}>
-                  {answer.author?.username ?? '익명'} · {new Date(answer.createdAt).toLocaleString('ko-KR')}
+            answers.map((answer, index) => (
+              <div 
+                key={answer.id} 
+                className="card fade-in-left" 
+                style={{ 
+                  marginBottom: '1.5rem',
+                  animationDelay: `${index * 0.1}s`,
+                  background: 'rgba(255, 255, 255, 0.3)'
+                }}
+              >
+                <div style={{ 
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '1rem',
+                  marginBottom: '1rem',
+                  fontSize: '0.9rem',
+                  color: '#4a5568',
+                  fontWeight: '600'
+                }}>
+                  <span style={{
+                    background: 'linear-gradient(45deg, #4facfe, #00f2fe)',
+                    color: 'white',
+                    padding: '4px 12px',
+                    borderRadius: '15px',
+                    fontSize: '0.8rem'
+                  }}>
+                    👤 {answer.author?.username ?? '익명'}
+                  </span>
+                  <span>📅 {new Date(answer.createdAt).toLocaleString('ko-KR')}</span>
                 </div>
-                <div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.5 }}>{answer.content}</div>
+                <div style={{ 
+                  whiteSpace: 'pre-wrap', 
+                  lineHeight: '1.7',
+                  fontSize: '1rem',
+                  background: 'rgba(255, 255, 255, 0.5)',
+                  padding: '1rem',
+                  borderRadius: '8px',
+                  border: '1px solid rgba(255, 255, 255, 0.3)'
+                }}>
+                  {answer.content}
+                </div>
               </div>
             ))
           )}
         </div>
       </section>
 
-      <section style={{ marginTop: '2rem' }}>
-        <h3 style={{ marginBottom: '1rem' }}>답변 작성</h3>
+      {/* 답변 작성 폼 */}
+      <section className="card">
+        <h3 style={{ 
+          fontSize: '1.5rem',
+          fontWeight: '700',
+          marginBottom: '1.5rem',
+          background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent'
+        }}>
+          ✍️ 답변 작성하기
+        </h3>
         <form onSubmit={handleAnswerSubmit}>
-          <textarea
-            value={answerContent}
-            onChange={(e) => setAnswerContent(e.target.value)}
-            placeholder="답변 내용을 입력하세요."
-            style={{ width: '100%', minHeight: '150px', padding: '0.75rem', borderRadius: '6px', border: '1px solid #ccc' }}
-          />
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            style={{
-              marginTop: '1rem',
-              padding: '0.75rem 1.5rem',
-              backgroundColor: '#007bff',
-              color: 'white',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer',
-              opacity: isSubmitting ? 0.7 : 1
-            }}
-          >
-            {isSubmitting ? '등록 중...' : '답변 등록'}
-          </button>
+          <div className="form-group">
+            <textarea
+              value={answerContent}
+              onChange={(e) => setAnswerContent(e.target.value)}
+              placeholder="도움이 되는 답변을 작성해주세요! 코드나 예시가 있다면 함께 적어주세요."
+              className="form-input"
+              style={{ minHeight: '180px', resize: 'vertical' }}
+            />
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={`btn ${isSubmitting ? 'btn-secondary' : 'btn-warning'}`}
+              style={{ 
+                minWidth: '200px',
+                opacity: isSubmitting ? 0.7 : 1,
+                cursor: isSubmitting ? 'not-allowed' : 'pointer'
+              }}
+            >
+              {isSubmitting ? '⏳ 등록 중...' : '🚀 답변 등록'}
+            </button>
+          </div>
         </form>
       </section>
     </div>

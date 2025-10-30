@@ -18,30 +18,48 @@ function Navbar() { // Navbar 함수형 컴포넌트를 정의합니다.
     navigate('/'); // 루트 경로('/')로 페이지를 이동시킵니다.
   };
 
-  return ( // JSX를 반환하여 네비게이션 바 UI를 렌더링합니다.
-    <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem', borderBottom: '1px solid #ccc' }}> {/* nav 요소에 flexbox 스타일과 하단 테두리를 적용합니다. */}
-      <div style={{ display: 'flex', alignItems: 'center' }}> {/* 로고와 사용자 이름을 감싸는 div 입니다. */}
-        <Link to="/" style={{ textDecoration: 'none', color: 'black', fontSize: '1.5rem', marginRight: '1rem' }}>Pybo</Link> {/* 'Pybo' 로고를 클릭하면 홈으로 이동하는 링크입니다. */}
-        {isLoggedIn && <span>케시퐌 (kesipan)</span>} {/* 로그인 상태일 때만 사용자 이름을 표시합니다. */}
-      </div>
-      <div> {/* 버튼들을 감싸는 div 입니다. */}
-        {isLoggedIn ? ( // 로그인 상태(isLoggedIn)에 따라 다른 버튼들을 렌더링합니다.
-          <> {/* 로그인 상태일 때 보여줄 요소들입니다. (React Fragment) */}
-            <Link to="/create-post"> {/* '질문 등록하기' 페이지로 이동하는 링크입니다. */}
-              <button style={{ backgroundColor: 'blue', color: 'white', border: 'none', padding: '0.5rem 1rem', borderRadius: '5px', cursor: 'pointer' }}>질문 등록하기</button>
-            </Link>
-            <button onClick={handleLogout} style={{ marginLeft: '1rem', backgroundColor: 'transparent', border: '1px solid #ccc', padding: '0.5rem 1rem', borderRadius: '5px', cursor: 'pointer' }}>로그아웃</button> {/* 클릭 시 handleLogout 함수를 실행하는 로그아웃 버튼입니다. */}
-          </>
-        ) : (
-          <> {/* 로그아웃 상태일 때 보여줄 요소들입니다. (React Fragment) */}
-            <Link to="/login"> {/* 로그인 페이지로 이동하는 링크입니다. */}
-              <button style={{ backgroundColor: 'transparent', border: '1px solid #ccc', padding: '0.5rem 1rem', borderRadius: '5px', cursor: 'pointer' }}>로그인</button>
-            </Link>
-            <Link to="/register"> {/* 회원가입 페이지로 이동하는 링크입니다. */}
-              <button style={{ marginLeft: '1rem', backgroundColor: 'transparent', border: '1px solid #ccc', padding: '0.5rem 1rem', borderRadius: '5px', cursor: 'pointer' }}>회원가입</button>
-            </Link>
-          </>
-        )}
+  return (
+    <nav className="navbar">
+      <div className="navbar-content">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <Link to="/" className="navbar-brand float">
+            🌟 JackTest
+          </Link>
+          {isLoggedIn && (
+            <div style={{ 
+              background: 'linear-gradient(45deg, #4facfe, #00f2fe)',
+              padding: '8px 16px',
+              borderRadius: '20px',
+              color: 'white',
+              fontSize: '0.9rem',
+              fontWeight: '600',
+              boxShadow: '0 4px 15px rgba(79, 172, 254, 0.3)'
+            }}>
+              👋 안녕하세요, 케시퐌님!
+            </div>
+          )}
+        </div>
+        <div className="navbar-nav">
+          {isLoggedIn ? (
+            <>
+              <Link to="/create-post" className="btn btn-success">
+                ✍️ 질문 등록
+              </Link>
+              <button onClick={handleLogout} className="btn btn-secondary">
+                👋 로그아웃
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="btn btn-primary">
+                🔐 로그인
+              </Link>
+              <Link to="/register" className="btn btn-secondary">
+                🚀 회원가입
+              </Link>
+            </>
+          )}
+        </div>
       </div>
     </nav>
   );

@@ -30,19 +30,55 @@ function CreatePost() { // CreatePost 함수형 컴포넌트를 정의합니다.
     }
   };
 
-  return ( // JSX를 반환하여 UI를 렌더링합니다.
-    <div style={{ padding: '1rem' }}> {/* 전체를 감싸는 div에 패딩 스타일을 적용합니다. */}
-      <h2>질문 등록하기</h2> {/* 페이지 제목을 h2 태그로 표시합니다. */}
-      <form onSubmit={handleSubmit}> {/* 폼 제출 시 handleSubmit 함수가 호출되도록 설정합니다. */}
-        <div style={{ marginBottom: '1rem' }}> {/* 제목 입력 부분을 감싸는 div에 아래쪽 여백 스타일을 적용합니다. */}
-          <label>제목</label> {/* '제목' 라벨입니다. */}
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required style={{ width: '100%', padding: '0.5rem' }} /> {/* 제목 입력 필드입니다. 값이 변경될 때마다 title 상태가 업데이트됩니다. */}
+  return (
+    <div className="glass-container fade-in-up" style={{ maxWidth: '800px', margin: '2rem auto' }}>
+      <h2 style={{ 
+        textAlign: 'center', 
+        marginBottom: '2rem', 
+        background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        fontSize: '2.5rem',
+        fontWeight: '800'
+      }}>
+        ✍️ 새로운 질문 등록
+      </h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label className="form-label">📝 제목</label>
+          <input 
+            type="text" 
+            value={title} 
+            onChange={(e) => setTitle(e.target.value)} 
+            required 
+            className="form-input"
+            placeholder="궁금한 것을 간단히 요약해주세요"
+          />
         </div>
-        <div style={{ marginBottom: '1rem' }}> {/* 내용 입력 부분을 감싸는 div에 아래쪽 여백 스타일을 적용합니다. */}
-          <label>내용</label> {/* '내용' 라벨입니다. */}
-          <textarea value={content} onChange={(e) => setContent(e.target.value)} required style={{ width: '100%', padding: '0.5rem', minHeight: '200px' }} /> {/* 내용 입력 필드(textarea)입니다. 값이 변경될 때마다 content 상태가 업데이트됩니다. */}
+        <div className="form-group">
+          <label className="form-label">📄 내용</label>
+          <textarea 
+            value={content} 
+            onChange={(e) => setContent(e.target.value)} 
+            required 
+            className="form-input"
+            style={{ minHeight: '250px', resize: 'vertical' }}
+            placeholder="자세한 내용을 작성해주세요. 코드나 예시가 있다면 함께 적어주세요!"
+          />
         </div>
-        <button type="submit" style={{ padding: '0.5rem 1rem' }}>저장하기</button> {/* 폼을 제출하는 '저장하기' 버튼입니다. */}
+        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+          <button type="submit" className="btn btn-success" style={{ minWidth: '150px' }}>
+            🚀 등록하기
+          </button>
+          <button 
+            type="button" 
+            className="btn btn-secondary"
+            onClick={() => navigate('/')}
+            style={{ minWidth: '150px' }}
+          >
+            ❌ 취소
+          </button>
+        </div>
       </form>
     </div>
   );

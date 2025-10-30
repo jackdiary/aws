@@ -1,0 +1,15 @@
+# IDE and OS files
+.idea/
+.vscode/
+*.swp
+*~
+Thumbs.db
+.DS_Store
+
+# Deployment artifacts and sensitive information
+*.pem
+*.ps1
+*.json
+*.md
+*.txt
+ssh/
